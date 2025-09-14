@@ -1,4 +1,5 @@
 import React from 'react';
+
 class Item extends React.Component {
   render() {
     return (
@@ -86,7 +87,7 @@ class App extends React.Component {
 
         <input type="text" placeholder="Fruit name" ref={this.fruitRef} /><br />
         <button onClick={this.addFruit}>Add Fruit</button>
-        
+
       </div>
 
     )
