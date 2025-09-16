@@ -20,6 +20,14 @@ class Fruit extends React.Component{
   }
 }
 
+class Name extends React.Component{
+  render(){
+    return(
+      <li>{this.props.nameBerry}</li>
+    )
+  }
+}
+
 class App extends React.Component {
   state = {
     items: [
@@ -27,12 +35,14 @@ class App extends React.Component {
       { id: 2, name: 'Orange', price: 0.89 },
     ],
     fruits: [],
+    names: [],
     mynum : 0,
   }
 
   nameRef = React.createRef();
   priceRef = React.createRef();
   fruitRef = React.createRef();
+  nameBerryRef  = React.createRef();
 
   add = () => {
     let id = this.state.items.length + 1;
@@ -57,6 +67,15 @@ class App extends React.Component {
     });
   };
 
+  printName = () => {
+    let id = this.state.names.length + 1;
+    let nameBerry = this.nameBerryRef.current.value;
+
+    this.setState({
+      names: [...this.state.names, { id, nameBerry }],
+    });
+  }
+
   render() {
     return (
       <div>
@@ -73,9 +92,15 @@ class App extends React.Component {
 
         <ol>
           {this.state.fruits.map((f) => (
-            <Fruit key={f.id} id={f.id} name={f.name} />
+            <Fruit id={f.id} name={f.name} />
           ))}
         </ol>
+
+        <ul>
+          {this.state.names.map((berry) => (
+            <Name id={berry.id} nameBerry={berry.nameBerry} />
+          ))}
+        </ul>
         
         <h3>My Number is {this.state.mynum}</h3>
 
@@ -87,6 +112,11 @@ class App extends React.Component {
 
         <input type="text" placeholder="Fruit name" ref={this.fruitRef} /><br />
         <button onClick={this.addFruit}>Add Fruit</button>
+
+        <br /><br />
+
+        <input type="text" placeholder="Name" ref={this.nameBerryRef} /><br />
+        <button onClick={this.printName}>Add Name</button>
 
       </div>
 
