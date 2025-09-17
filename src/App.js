@@ -1,5 +1,15 @@
 import React from 'react';
 import Toolbar from './my-components/ToolbarComponent';
+// import About from './my-components/About';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+function Home() {
+  return <h1>Home Page</h1>;
+}
+
+function About() {
+  return <h1>About Page</h1>;
+}
 
 class Item extends React.Component {
   render() {
@@ -118,9 +128,22 @@ class App extends React.Component {
     });
   };
 
+  
   render() {
     return (
       <div>
+        <Router>
+          <nav>
+            <Link to="/">Home</Link> | 
+            <Link to="/about">About</Link>
+          </nav>
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </Router>
+          
         <h1>Hello React</h1>
         <ul>
           {
