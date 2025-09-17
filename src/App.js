@@ -1,4 +1,5 @@
 import React from 'react';
+import Toolbar from './my-components/ToolbarComponent';
 
 class Item extends React.Component {
   render() {
@@ -28,6 +29,27 @@ class Name extends React.Component{
   }
 }
 
+class AddForm extends React.Component {
+  nameRef = React.createRef();
+  priceRef = React.createRef();
+
+  add = () => {
+    let name = this.nameRef.current.value;
+    let price = this.priceRef.current.value;
+    this.props.add(name, price);
+  }
+  render() {
+    return (
+      <div>
+        <input type="text" ref={this.nameRef} /><br />
+        <input type="text" ref={this.priceRef} /><br />
+        <button onClick={this.add}>Add</button>
+      </div>
+    )
+  }
+}
+
+
 class App extends React.Component {
   state = {
     items: [
@@ -37,21 +59,34 @@ class App extends React.Component {
     fruits: [],
     names: [],
     mynum : 0,
+    dataList: [] //Toolbar Component
   }
 
-  nameRef = React.createRef();
-  priceRef = React.createRef();
+  // nameRef = React.createRef();
+  // priceRef = React.createRef();
   fruitRef = React.createRef();
   nameBerryRef  = React.createRef();
 
-  add = () => {
+  // add = () => {
+  //   let id = this.state.items.length + 1;
+  //   let name = this.nameRef.current.value;
+  //   let price = this.priceRef.current.value;
+  //   this.setState({
+  //     items: [
+  //       ...this.state.items,
+  //       { id, name, price }
+  //     ],
+
+  //     mynum: this.state.mynum + 1 
+  //   });
+  // }
+
+  add = (name, price) => {
     let id = this.state.items.length + 1;
-    let name = this.nameRef.current.value;
-    let price = this.priceRef.current.value;
     this.setState({
       items: [
-        ...this.state.items,
-        { id, name, price }
+      ...this.state.items,
+      { id, name, price }
       ],
 
       mynum: this.state.mynum + 1 
@@ -75,6 +110,13 @@ class App extends React.Component {
       names: [...this.state.names, { id, nameBerry }],
     });
   }
+
+  //Toolbar Component
+  addData = (data) => {
+    this.setState({
+      dataList: [...this.state.dataList, data]
+    });
+  };
 
   render() {
     return (
@@ -104,9 +146,10 @@ class App extends React.Component {
         
         <h3>My Number is {this.state.mynum}</h3>
 
-        <input type="text" ref={this.nameRef} /><br />
+        {/* <input type="text" ref={this.nameRef} /><br />
         <input type="text" ref={this.priceRef} /><br />
-        <button onClick={this.add}>Add</button>
+        <button onClick={this.add}>Add</button> */}
+        <AddForm add={this.add} />
 
         <br /><br />
 
@@ -118,6 +161,16 @@ class App extends React.Component {
         <input type="text" placeholder="Name" ref={this.nameBerryRef} /><br />
         <button onClick={this.printName}>Add Name</button>
 
+        {/* Toolbar Component */}
+        <Toolbar add={this.addData}>
+          <h1>Hello React</h1>
+          <h2>Component composition</h2>
+        </Toolbar>
+        <ul>
+          {this.state.dataList.map((d, i) => (
+            <li key={i}>{d}</li>
+          ))}
+        </ul>
       </div>
 
     )
